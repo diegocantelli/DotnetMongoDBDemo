@@ -17,5 +17,16 @@ namespace DriversAppApi.Services
         }
 
         public async Task<List<Driver>> GetAsync() => await _driverCollection.Find(_ => true).ToListAsync();
+
+        public async Task<Driver> GetAsync(string id) => await _driverCollection.Find(x => x.Id == id)
+            .FirstOrDefaultAsync(); 
+
+        public async Task CreateAsync(Driver driver) => await _driverCollection.InsertOneAsync(driver);
+
+        public async Task UpdateAsync(Driver driver) => await _driverCollection
+            .ReplaceOneAsync(x => x.Id == driver.Id, driver);
+
+        public async Task DeleteAsync(string id) => await _driverCollection
+            .DeleteOneAsync(x => x.Id == id);
     }
 }
