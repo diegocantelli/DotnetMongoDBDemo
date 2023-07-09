@@ -23,8 +23,11 @@ namespace DriversAppApi.Services
 
         public async Task CreateAsync(Driver driver) => await _driverCollection.InsertOneAsync(driver);
 
-        public async Task UpdateAsync(Driver driver) => await _driverCollection
-            .ReplaceOneAsync(x => x.Id == driver.Id, driver);
+        public async Task UpdateAsync(Driver driver) 
+        {
+            await _driverCollection
+                .ReplaceOneAsync(x => x.Id == driver.Id, driver);
+        }
 
         public async Task DeleteAsync(string id) => await _driverCollection
             .DeleteOneAsync(x => x.Id == id);
