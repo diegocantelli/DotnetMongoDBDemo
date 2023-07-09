@@ -61,7 +61,7 @@ namespace DriversAppApi.Controllers
         {
             await _driverService.DeleteAsync(id);
 
-            return Ok();
+            return NoContent();
         }
         
     }
