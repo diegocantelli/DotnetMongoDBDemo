@@ -63,6 +63,14 @@ namespace DriversAppApi.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("GetDriverWithTeamName")]
+        public async Task<IActionResult> GetDriverWithTeamName(string driverId)
+        {
+            var driverWithTeamName = await _driverService.GetDriverWithTeamName(driverId);
+
+            return Ok(driverWithTeamName);
+        }
         
     }
 }
