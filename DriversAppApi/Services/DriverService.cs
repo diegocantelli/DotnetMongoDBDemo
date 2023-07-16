@@ -117,5 +117,14 @@ namespace DriversAppApi.Services
 
             return Task.FromResult(driverAfterUpdate);
         }
+
+        public Task<long> CountDocuments()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Eq(x => x.DriverName, "teste");
+
+            var driversCount = _driverCollection.CountDocuments(filterDefinition);
+
+            return Task.FromResult(driversCount);
+        }
     }
 }
