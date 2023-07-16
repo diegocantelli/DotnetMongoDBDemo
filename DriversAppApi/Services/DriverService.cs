@@ -138,5 +138,17 @@ namespace DriversAppApi.Services
 
             return Task.FromResult(allDrivers);
         }
+
+        public Task<List<Driver>> GetDriversWithSkip()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Gt(x => x.Number, 10) &
+                Builders<Driver>.Filter.Lt(x => x.Number, 50);
+
+            var allDrivers = _driverCollection.Find(filterDefinition)
+                .Skip(2)
+                .ToList();
+
+            return Task.FromResult(allDrivers);
+        }
     }
 }
