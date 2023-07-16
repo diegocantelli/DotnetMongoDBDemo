@@ -66,5 +66,13 @@ namespace DriversAppApi.Services
 
             return allDrivers;
         }
+
+        public async Task<IList<Driver>> GetAllDriversWithGTE(int driverNumber)
+        {
+            var filterDefinition = Builders<Driver>.Filter.Gte(x => x.Number, driverNumber);
+            var allDrivers = _driverCollection.Find(filterDefinition).ToList();
+
+            return allDrivers;
+        }
     }
 }
