@@ -84,5 +84,15 @@ namespace DriversAppApi.Services
 
             return allDrivers;
         }
+
+        public async Task<IList<Driver>> GetAllDriversWithCombinedFilters()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Gt(x => x.Number, 10) &
+                Builders<Driver>.Filter.Lt(x => x.Number, 50);
+                
+            var allDrivers = _driverCollection.Find(filterDefinition).ToList();
+
+            return allDrivers;
+        }
     }
 }
