@@ -74,5 +74,15 @@ namespace DriversAppApi.Services
 
             return allDrivers;
         }
+
+        public async Task<IList<Driver>> GetAllDriversWithIN(int[] numbers)
+        {
+            // Busca todos os pilotos cujo o número esteja dentro dos valores especificados
+            // pelo array informado no argumento do método
+            var filterDefinition = Builders<Driver>.Filter.In(x => x.Number, numbers);
+            var allDrivers = _driverCollection.Find(filterDefinition).ToList();
+
+            return allDrivers;
+        }
     }
 }
