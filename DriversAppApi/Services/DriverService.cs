@@ -89,10 +89,21 @@ namespace DriversAppApi.Services
         {
             var filterDefinition = Builders<Driver>.Filter.Gt(x => x.Number, 10) &
                 Builders<Driver>.Filter.Lt(x => x.Number, 50);
-                
+
             var allDrivers = _driverCollection.Find(filterDefinition).ToList();
 
             return allDrivers;
+        }
+
+        public async Task UpsertCommand()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Eq(x => x.Number, 10);
+            var updateDefinition = Builders<Driver>.Update
+                .Set(x => x.DriverName, "Teste")
+                .Set(x => x.Number, 10);
+
+            // IsUpsert: Caso o registro já exista, será atualizado, senão será criado um novo documento
+            _driverCollection.UpdateOne(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = true });
         }
     }
 }
