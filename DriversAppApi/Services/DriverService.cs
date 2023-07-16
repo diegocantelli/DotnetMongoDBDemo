@@ -105,5 +105,17 @@ namespace DriversAppApi.Services
             // IsUpsert: Caso o registro já exista, será atualizado, senão será criado um novo documento
             _driverCollection.UpdateOne(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = true });
         }
+
+        public Task<Driver> FindOneAndUpdate()
+        {
+            var findOneAndUpdateOptions = new FindOneAndUpdateOptions<Driver> { ReturnDocument = ReturnDocument.After };
+            var filterDefinition = Builders<Driver>.Filter.Eq(x => x.DriverName, "teste");
+            var updateDefinition = Builders<Driver>.Update
+                .Set(x => x.DriverName, "Teste update");
+
+            var driverAfterUpdate = _driverCollection.FindOneAndUpdate<Driver>(filterDefinition, updateDefinition, findOneAndUpdateOptions);
+
+            return Task.FromResult(driverAfterUpdate);
+        }
     }
 }
