@@ -58,5 +58,13 @@ namespace DriversAppApi.Services
 
             return allDrivers;
         }
+
+        public async Task<IList<Driver>> GetAllDriversWithEQ(string driverName)
+        {
+            var filterDefinition = Builders<Driver>.Filter.Eq(x => x.DriverName, driverName);
+            var allDrivers = _driverCollection.Find(filterDefinition).ToList();
+
+            return allDrivers;
+        }
     }
 }
