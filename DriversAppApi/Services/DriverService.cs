@@ -44,9 +44,19 @@ namespace DriversAppApi.Services
                     x => x.Id,
                     x => x.Team
                 )
+                // .Project<DriverWithTeam>(Builders<DriverWithTeam>.Projection
+                //     .Exclude(driverWithTeam => driverWithTeam.Id))
                 .ToList();
 
             return result;
+        }
+
+        public async Task<IList<Driver>> GetAllDrivers()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Empty;
+            var allDrivers = _driverCollection.Find(filterDefinition).ToList();
+
+            return allDrivers;
         }
     }
 }
