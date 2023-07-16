@@ -126,5 +126,17 @@ namespace DriversAppApi.Services
 
             return Task.FromResult(driversCount);
         }
+
+        public Task<List<Driver>> GetDriversWithLimit()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Gt(x => x.Number, 10) &
+                Builders<Driver>.Filter.Lt(x => x.Number, 50);
+
+            var allDrivers = _driverCollection.Find(filterDefinition)
+                .Limit(2)
+                .ToList();
+
+            return Task.FromResult(allDrivers);
+        }
     }
 }
