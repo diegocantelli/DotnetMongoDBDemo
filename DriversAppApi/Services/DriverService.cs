@@ -150,5 +150,13 @@ namespace DriversAppApi.Services
 
             return Task.FromResult(allDrivers);
         }
+
+        public async Task<Driver> GetDriverById(string driverId)
+        {
+            var filterDefinition = Builders<Driver>.Filter.Eq(x => x.Id, driverId);
+            var driver = await _driverCollection.Find(filterDefinition).FirstOrDefaultAsync();
+
+            return driver;
+        }
     }
 }
