@@ -169,5 +169,16 @@ namespace DriversAppApi.Services
 
             await _driverCollection.Indexes.CreateManyAsync(indexList);
         }
+
+        public async Task GetDriversWithBatchSize()
+        {
+            var filterDefinition = Builders<Driver>.Filter.Empty;
+            using var cursor = await _driverCollection.FindAsync(filterDefinition, new FindOptions<Driver> { BatchSize = 100});
+            List<Driver> productList;
+            while(await cursor.MoveNextAsync()) //a cada iteração serão lidos 100 registros
+            {
+                productList = cursor.Current.ToList(); // preenche a lista para fazer algo futuramente
+            }
+        }
     }
 }
