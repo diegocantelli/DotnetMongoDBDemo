@@ -158,5 +158,16 @@ namespace DriversAppApi.Services
 
             return driver;
         }
+
+        public async Task CreateIndex()
+        {
+            var indexKeys = Builders<Driver>.IndexKeys;
+            var indexList = new List<CreateIndexModel<Driver>>
+            {
+                new CreateIndexModel<Driver>(indexKeys.Ascending(a => a.DriverName), new CreateIndexOptions { Unique = true })
+            };
+
+            await _driverCollection.Indexes.CreateManyAsync(indexList);
+        }
     }
 }
